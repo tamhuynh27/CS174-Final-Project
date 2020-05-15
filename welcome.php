@@ -38,17 +38,18 @@ echo "</html></body>";
             $row = $result->fetch_array(MYSQLI_NUM);
             $result->close();
             
-            $salt1 = $row[4];
-            $salt2 = $row[5];
+            $salt1 = $row[5];
+            $salt2 = $row[6];
             
             $token = hash('ripemd128', "$salt1$pw_temp$salt2");
             
-            if($token==$row[3]) {
+            if($token==$row[4]) {
                 session_start();
                 $_SESSION['uname'] = $un_temp;
                 $_SESSION['pw'] = $pw_temp;
                 $_SESSION['fname'] = $row[0];
                 $_SESSION['lname'] = $row[1];
+                $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
                 
                 //redirect page after user authorization
                 //to upload page
